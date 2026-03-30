@@ -41,6 +41,6 @@ class MaxHeap(BaseHeap[T]):
             largest = left_child
         if self.in_bounds(right_child) and self.heap[right_child] > self.heap[largest]: # if right child is larger, update value
             largest = right_child
-        if largest != index: # If we have a new largest value
+        if largest != index: # If we have a new largest value, swap
             self.heap[largest], self.heap[index] = self.heap[index], self.heap[largest]
             self.sift_down(largest)
