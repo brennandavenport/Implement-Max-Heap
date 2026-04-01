@@ -1,0 +1,65 @@
+from base_heap import BaseHeap, T
+from typing import Optional
+
+
+class MaxHeap(BaseHeap[T]):
+    def push(self, val: T) -> None:
+        # Impelmentation of push
+        if not self.heap:
+            self.heap.append(val)
+            return
+
+        self.heap.append(val)
+
+        if self.heap[0] < val:
+            # Swap Values
+            self.heap[0], self.heap[-1] = self.heap[-1], self.heap[0]
+
+        for i in range(0, len(self.heap) - 1):
+            left = 2 * i + 1
+            right = 2 * i + 2
+
+            if left >= len(self.heap):
+                break
+
+            if right >= len(self.heap):
+                if self.heap[i] < self.heap[left]:
+                    self.heap[i], self.heap[left] = self.heap[left], self.heap[i]
+                break
+
+            if self.heap[i] < self.heap[left] or self.heap[i] < self.heap[right]:
+                if self.heap[left] > self.heap[right]:
+                    self.heap[i], self.heap[left] = self.heap[left], self.heap[i]
+                else:
+                    self.heap[i], self.heap[right] = self.heap[right], self.heap[i]
+
+    def pop(self) -> Optional[T]:
+        # Implemenation of pop
+        if not self.heap:
+            return None
+
+        if len(self.heap) == 1:
+            return self.heap.pop()
+
+        self.heap[0], self.heap[-1] = self.heap[-1], self.heap[0]        
+
+        max_value = self.heap.pop()
+        
+        for i in range(0, len(self.heap) - 1):
+            left = 2 * i + 1
+            right = 2 * i + 2
+
+            if left >= len(self.heap):
+                break
+
+            if right >= len(self.heap):
+                if self.heap[i] < self.heap[left]:
+                    self.heap[i], self.heap[left] = self.heap[left], self.heap[i]
+                break
+
+            if self.heap[i] < self.heap[left] or self.heap[i] < self.heap[right]:
+                if self.heap[left] > self.heap[right]:
+                    self.heap[i], self.heap[left] = self.heap[left], self.heap[i]
+                else:
+                    self.heap[i], self.heap[right] = self.heap[right], self.heap[i]
+        return max_value
