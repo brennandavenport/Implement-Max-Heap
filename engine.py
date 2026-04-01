@@ -49,7 +49,7 @@ def main(fptr: str):
             try:
                 test_func(user_module.MaxHeap)
                 result = "Pass"
-            except Exception:
+            except Exception as e:
                 result = "Fail"
 
             print(f"{index}/{total_tests} {result} - {test_name}")
